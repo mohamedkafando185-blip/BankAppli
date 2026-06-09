@@ -4,41 +4,41 @@
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.1.5-6DB33F?logo=springboot)](https://spring.io/projects/spring-boot)
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)](https://react.dev/)
 [![Docker](https://img.shields.io/badge/Docker-26-2496ED?logo=docker)](https://www.docker.com/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-4169E1?logo=postgresql)](https://www.postgresql.org/)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql)](https://www.mysql.com/)
 
 **BankAppli** est une application bancaire complète développée dans le cadre du projet de fin d'année à l'École Mohammadia d'Ingénieurs (EMI). L'application permet la gestion centralisée des clients, des comptes bancaires et des opérations financières sécurisées.
 
 ---
 
-## 📋 Table des matières
+## Table des matières
 
 - [Prérequis](#prérequis)
 - [Installation rapide](#installation-rapide)
 - [Configuration SMTP (obligatoire)](#configuration-smtp-obligatoire)
-- [Comptes par défaut](#comptes-par-défaut)
+- [Comptes par défaut](#comptes-par-defaut)
 - [Commandes Docker utiles](#commandes-docker-utiles)
 - [Architecture du projet](#architecture-du-projet)
-- [Fonctionnalités](#fonctionnalités)
-- [Structure des rôles](#structure-des-rôles)
+- [Fonctionnalités](#fonctionnalites)
+- [Structure des rôles](#structure-des-roles)
 - [API REST principales](#api-rest-principales)
 - [Migration d'une version existante](#migration-dune-version-existante)
-- [Dépannage](#dépannage)
-- [Équipe](#équipe)
+- [Dépannage](#depannage)
+- [Équipe](#equipe)
 
 ---
 
-## 🚀 Prérequis
+## Prérequis
 
 | Outil | Version | Téléchargement |
 |-------|---------|----------------|
 | Docker Desktop | 26+ | [docker.com](https://www.docker.com/products/docker-desktop/) |
 | Ports libres | 3000, 8080, 3306 | — |
 
-> ⚠️ **Important** : Docker Desktop doit être démarré avant de lancer l'application.
+> **Important** : Docker Desktop doit être démarré avant de lancer l'application.
 
 ---
 
-## ⚡ Installation rapide
+## Installation rapide
 
 ### 1. Cloner le dépôt
 
@@ -51,7 +51,7 @@ cd BankAppli
 properties
 spring.mail.username=votre.email@gmail.com
 spring.mail.password=votre_mot_de_passe_application
-📧 Configuration Gmail : Activez les "Mots de passe d'application" dans votre compte Google (Sécurité → Mots de passe d'application). Utilisez ce mot de passe de 16 caractères, pas votre mot de passe Gmail habituel.
+Configuration Gmail : Activez les "Mots de passe d'application" dans votre compte Google (Sécurité → Mots de passe d'application). Utilisez ce mot de passe de 16 caractères, pas votre mot de passe Gmail habituel.
 
 3. Lancer l'application
 bash
@@ -66,22 +66,22 @@ docker compose ps
 Vous devriez voir 3 conteneurs avec le statut Up :
 
 Conteneur	Port	Rôle
-bankappli-mysql	3306	Base de données
+bankappli-mysql	3306	Base de données MySQL
 bankappli-backend	8080	API Spring Boot
 bankappli-frontend	3000	Interface React
 5. Accéder à l'application
 Service	URL
-🌐 Frontend	http://localhost:3000
-🔧 Backend API	http://localhost:8080/api
-🗄️ MySQL	localhost:3306
-🔐 Comptes par défaut
+Frontend	http://localhost:3000
+Backend API	http://localhost:8080/api
+MySQL	localhost:3306
+Comptes par défaut
 Rôle	Email	Mot de passe	Droits
-👑 Administrateur	admin@bankappli.com	admin123	Accès total
-👔 Employé	employe@bankappli.com	employe123	Gestion clients, versements
-👤 Client	client@test.com	client123	Virements, retraits (avec OTP)
+Administrateur	admin@bankappli.com	admin123	Accès total
+Employé	employe@bankappli.com	employe123	Gestion clients, versements
+Client	client@test.com	client123	Virements, retraits (avec OTP)
 Note : Le compte administrateur et client sont automatiquement créés au premier démarrage via le script init.sql.
 
-🐳 Commandes Docker utiles
+Commandes Docker utiles
 bash
 # Arrêter l'application
 docker compose down
@@ -105,7 +105,7 @@ docker exec -it bankappli-mysql mysql -u bankuser -pbankpass bankappli
 
 # Voir la consommation des conteneurs
 docker stats
-📁 Architecture du projet
+Architecture du projet
 text
 BankAppli/
 ├── backend/
@@ -129,52 +129,52 @@ BankAppli/
 ├── init.sql                  # Base de données initiale
 ├── migration_v2.sql          # Migration pour base existante
 └── README.md
-✨ Fonctionnalités
-🔒 Sécurité
+Fonctionnalités
+Sécurité
 Mécanisme	Implémentation
 Authentification	JWT (expiration 24h)
 Mots de passe	BCrypt (facteur 10)
 Double facteur	Code de transaction (6 chiffres, hashé BCrypt)
 Validation OTP	6 chiffres par email (valable 2 minutes)
 Audit	Table audit_log immuable (qui, quoi, quand, avant/après)
-🏦 Comptes bancaires
+Comptes bancaires
 Type	Caractéristiques
 Compte courant	Découvert autorisé, frais de gestion
 Compte épargne	Taux d'intérêt, plafond, pénalité de retrait anticipé
 RIB	24 chiffres au format bancaire (copie rapide)
-💸 Opérations
+Opérations
 Opération	Client	Employé/Admin	Sécurité
-Virement	✅	✅	Code transaction + OTP
-Retrait	✅	✅	Code transaction + OTP
-Versement	❌	✅	OTP uniquement
-📊 Traçabilité
+Virement	Oui	Oui	Code transaction + OTP
+Retrait	Oui	Oui	Code transaction + OTP
+Versement	Non	Oui	OTP uniquement
+Traçabilité
 Historique personnalisé : chaque client voit uniquement ses opérations
 
 Solde avant/après enregistré pour chaque opération
 
 Auteur visible par l'admin (qui a effectué l'opération)
 
-👥 Structure des rôles
+Structure des rôles
 Rôle	Versement	Retrait/Virement	Gestion clients	Gestion employés	Audit	Code transaction
-ADMIN	✅	✅	✅	✅	✅	❌
-MANAGER	✅	✅	✅	Modification	✅	❌
-EMPLOYE	✅	✅	✅	❌	❌	❌
-AUDITEUR	❌	❌	Lecture	Lecture	✅	❌
-CLIENT	❌	✅ (OTP)	Son profil	❌	❌	✅
-🔌 API REST principales
+ADMIN	Oui	Oui	Oui	Oui	Oui	Non
+MANAGER	Oui	Oui	Oui	Modification	Oui	Non
+EMPLOYE	Oui	Oui	Oui	Non	Non	Non
+AUDITEUR	Non	Non	Lecture	Lecture	Oui	Non
+CLIENT	Non	Oui (OTP)	Son profil	Non	Non	Oui
+API REST principales
 Méthode	Endpoint	Accès	Description
 POST	/api/auth/login	Public	Connexion, retourne JWT
 POST	/api/auth/register	Public	Inscription client
 GET	/api/clients	EMPLOYE	Liste tous les clients
 POST	/api/comptes/courant/{id}	EMPLOYE	Ouvrir compte courant
 POST	/api/operations/otp/demander	CLIENT	Demander un OTP
-POST	/api/operations/virement	TOUS	Virement (code + OTP pour client)
+POST	/api/operations/virement	Tous	Virement (code + OTP pour client)
 GET	/api/operations/me	CLIENT	Historique personnel
 GET	/api/audit	EMPLOYE	Journal d'audit
 POST	/api/securite/code-transaction	CLIENT	Définir code transaction
-📚 Documentation Swagger : http://localhost:8080/swagger-ui.html
+Documentation Swagger : http://localhost:8080/swagger-ui.html
 
-🔄 Migration d'une version existante
+Migration d'une version existante
 Si vous mettez à jour depuis une version antérieure :
 
 bash
@@ -191,36 +191,36 @@ Ajout du champ initiateur pour traçabilité employé
 
 Ajout des tables otp_tokens et codes_transaction
 
-🛠️ Dépannage
-❌ Erreur : "port is already allocated"
+Dépannage
+Erreur : "port is already allocated"
 bash
 # Trouver le processus utilisant le port 8080
 netstat -ano | findstr :8080
 
 # Arrêter le processus (remplacer PID par l'identifiant)
 taskkill /PID <PID> /F
-❌ Erreur : "Access denied for user 'bankuser'"
+Erreur : "Access denied for user 'bankuser'"
 bash
 # Réinitialiser les droits MySQL
 docker exec -it bankappli-mysql mysql -u root -prootpass
 sql
 GRANT ALL PRIVILEGES ON bankappli.* TO 'bankuser'@'%';
 FLUSH PRIVILEGES;
-❌ Erreur : "Cannot connect to MySQL"
+Erreur : "Cannot connect to MySQL"
 bash
 # Redémarrer MySQL seul
 docker compose restart mysql
 
 # Vérifier que MySQL est sain
 docker exec -it bankappli-mysql mysqladmin ping -u bankuser -pbankpass
-❌ OTP ne s'envoie pas
+OTP ne s'envoie pas
 Vérifiez votre configuration SMTP dans application.properties
 
 Activez les "Mots de passe d'application" dans Gmail
 
 Consultez les logs : docker compose logs backend | findstr "OTP"
 
-👨‍💻 Équipe
+Équipe
 Nom	Rôle
 ABOUBAKAR Abdelaziz	Développeur Backend
 DIN Isaac Kaougahi	Développeur Frontend
@@ -232,11 +232,7 @@ Encadré par : Pr. Zohair ELMOURABIT
 
 Année académique : 2025 — 2026
 
-📜 Licence
+Licence
 Ce projet est développé dans un cadre pédagogique à l'École Mohammadia d'Ingénieurs. Toute reproduction ou utilisation doit mentionner la source.
 
 BankAppli — Votre banque, à portée de main. 🏦
-
-text
-
-Ce README est prêt à être utilisé. Vous pouvez le copier-coller dans un fichier `README.md` à la racine de votre projet.
