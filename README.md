@@ -122,28 +122,28 @@ docker stats
 
 ---
 
-BankAppli/
-├── backend/
-│   ├── Dockerfile
-│   ├── pom.xml
-│   └── src/main/java/com/example/bankappli/
-│       ├── controller/      # REST endpoints (Auth, Client, Compte, Operation, Employe, Audit)
-│       ├── model/           # Entités JPA (Person, Client, Employe, CompteBancaire, OperationBancaire)
-│       ├── repository/      # Spring Data JPA
-│       ├── service/         # Logique métier (Client, Compte, Operation, Otp, Audit)
-│       ├── security/        # JWT + Spring Security (JwtService, JwtAuthFilter, SecurityConfig)
-│       └── exception/       # Gestion centralisée des erreurs
-├── frontend/
-│   ├── Dockerfile
-│   ├── package.json
-│   └── src/
-│       ├── pages/           # Composants React (Login, Register, Clients, Comptes, Operations, Employes, Profil)
-│       ├── services/        # Appels API (api.js)
-│       └── App.js
-├── docker-compose.yml
-├── init.sql                 # Base de données initiale
-├── migration_v2.sql          # Migration pour base existante
-└── README.md"
+BankAppli/ \
+├── backend/ \
+│   ├── Dockerfile \
+│   ├── pom.xml \
+│   └── src/main/java/com/example/bankappli/ \
+│       ├── controller/      # REST endpoints (Auth, Client, Compte, Operation, Employe, Audit) \
+│       ├── model/           # Entités JPA (Person,Client, Employe, CompteBancaire, OperationBancaire) \
+│       ├── repository/      # Spring Data JPA \
+│       ├── service/         # Logique métier (Client, Compte, Operation, Otp, Audit) \
+│       ├── security/        # JWT + Spring Security  \(JwtService, JwtAuthFilter, SecurityConfig) \
+│       └── exception/       # Gestion centralisée des erreurs \
+├── frontend/ \
+│   ├── Dockerfile \
+│   ├── package.json \
+│   └── src/ \
+│       ├── pages/           # Composants React (Login,  \Register, Clients, Comptes, Operations, Employes, Profil) \
+│       ├── services/        # Appels API (api.js) \
+│       └── App.js \
+├── docker-compose.yml \
+├── init.sql                 # Base de données initiale \
+├── migration_v2.sql          # Migration pour base existante \
+└── README.md \
 
 ---
 
