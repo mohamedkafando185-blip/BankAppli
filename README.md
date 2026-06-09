@@ -118,9 +118,9 @@ docker exec -it bankappli-mysql mysql -u bankuser -pbankpass bankappli
 # Voir la consommation des conteneurs
 docker stats
 
----
-
 ## Architecture du projet
+
+---
 
 BankAppli/
 ├── backend/
@@ -143,7 +143,7 @@ BankAppli/
 ├── docker-compose.yml
 ├── init.sql                 # Base de données initiale
 ├── migration_v2.sql          # Migration pour base existante
-└── README.md
+└── README.md"
 
 ---
 
